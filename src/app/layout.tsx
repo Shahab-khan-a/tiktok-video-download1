@@ -31,6 +31,11 @@ export const metadata: Metadata = {
     "tiktok mp3 downloader",
     "tiktok to mp4",
   ],
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
   openGraph: {
     title: "TikSaver HD — High Quality TikTok Video Downloader Without Watermark",
     description:
