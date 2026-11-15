@@ -37,7 +37,10 @@ export const metadata: Metadata = {
     apple: "/icon.svg",
   },
   verification: {
-    google: "googleee172361deee892a",
+    google: [
+      "G_N6fI1Dj9_tYGBR_Fx8QftghMgROf9VHOTa9NKCvK4",
+      "googleee172361deee892a",
+    ],
   },
   openGraph: {
     title: "TikSaver HD — High Quality TikTok Video Downloader Without Watermark",
