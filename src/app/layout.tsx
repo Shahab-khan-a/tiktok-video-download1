@@ -41,6 +41,14 @@ export const metadata: Metadata = {
     description:
       "Download crystal-clear TikTok videos in Full HD 1080p without any watermark or logo. Fast, free, and unlimited.",
     type: "website",
+    images: [
+      {
+        url: "/app-icon.jpg",
+        width: 1024,
+        height: 1024,
+        alt: "TikSaver HD App Icon",
+      },
+    ],
   },
 };
 
