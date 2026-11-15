@@ -32,6 +32,23 @@ export interface TikTokDownloads {
   audio: DownloadOption | null;
 }
 
+export type QualityId = "1080p" | "720p" | "480p" | "audio" | "watermarked";
+
+export interface QualityOption {
+  id: QualityId;
+  label: string;
+  resolution: string;
+  format: "MP4" | "MP3";
+  type: "video" | "audio";
+  url: string;
+  size?: number;
+  sizeFormatted?: string;
+  badge?: string;
+  badgeColor?: "cyan" | "pink" | "emerald" | "amber" | "zinc";
+  description: string;
+  recommended?: boolean;
+}
+
 export interface TikTokVideoData {
   id: string;
   title: string;
@@ -41,6 +58,7 @@ export interface TikTokVideoData {
   stats: TikTokStats;
   music: TikTokMusic;
   downloads: TikTokDownloads;
+  qualities: QualityOption[];
   isSlideshow: boolean;
   images: string[];
 }
@@ -52,4 +70,5 @@ export interface RecentDownloadItem {
   cover: string | null;
   timestamp: number;
   hdUrl: string;
+  quality?: string;
 }

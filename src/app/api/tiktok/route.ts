@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { QualityOption } from "@/types/tiktok";
 
 
 interface TikWMResponse {
@@ -51,6 +52,14 @@ function normalizeUrl(rawUrl: string): string {
   // Strip trailing punctuation
   url = url.replace(/[),.;]+$/, "");
   return url;
+}
+
+function formatBytes(bytes?: number): string {
+  if (!bytes || bytes === 0) return "";
+  const k = 1024;
+  const sizes = ["Bytes", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
 }
 
 function formatMediaUrl(url?: string | null): string | null {
@@ -160,6 +169,100 @@ export async function POST(req: NextRequest) {
 
     const isSlideshow = images.length > 0;
 
+    const qualities: QualityOption[] = [];
+
+    // 1. 1080p Full HD (Best quality stream)
+    if (hdPlayUrl) {
+      const hdSize = data.hd_size || data.size || 0;
+      qualities.push({
+        id: "1080p",
+        label: "1080p Full HD",
+        resolution: "1920x1080 (1080p)",
+        format: "MP4",
+        type: "video",
+        url: hdPlayUrl,
+        size: hdSize,
+        sizeFormatted: formatBytes(hdSize) || "Full HD",
+        badge: "Best Quality",
+        badgeColor: "cyan",
+        description: "Maximum resolution & clarity • No watermark",
+        recommended: false,
+      });
+    }
+
+    // 2. 720p HD (Universal MP4 - Recommended for 100% device compatibility)
+    if (playUrl) {
+      const sdSize = data.size || 0;
+      qualities.push({
+        id: "720p",
+        label: "720p HD (Universal)",
+        resolution: "1280x720 (720p)",
+        format: "MP4",
+        type: "video",
+        url: playUrl,
+        size: sdSize,
+        sizeFormatted: formatBytes(sdSize) || "Standard HD",
+        badge: "Recommended",
+        badgeColor: "emerald",
+        description: "Universal H.264 • Plays on all iPhone, Android & PC",
+        recommended: true,
+      });
+    }
+
+    // 3. 480p SD (Data Saver / Fast mobile download)
+    if (playUrl) {
+      const estSize = data.size ? Math.round(data.size * 0.6) : 0;
+      qualities.push({
+        id: "480p",
+        label: "480p SD (Fast)",
+        resolution: "854x480 (480p)",
+        format: "MP4",
+        type: "video",
+        url: playUrl,
+        size: estSize,
+        sizeFormatted: formatBytes(estSize) || "Lightweight",
+        badge: "Data Saver",
+        badgeColor: "amber",
+        description: "Smaller file size • Fast download • Less data usage",
+        recommended: false,
+      });
+    }
+
+    // 4. MP3 Audio (Original Sound track)
+    if (musicUrl) {
+      qualities.push({
+        id: "audio",
+        label: "MP3 Audio (320kbps)",
+        resolution: "Audio Only (320kbps)",
+        format: "MP3",
+        type: "audio",
+        url: musicUrl,
+        badge: "Audio Only",
+        badgeColor: "pink",
+        description: "Original TikTok background sound & music track",
+        recommended: false,
+      });
+    }
+
+    // 5. Watermarked (Original stream with TikTok watermark)
+    if (wmPlayUrl) {
+      const wmSize = data.wm_size || 0;
+      qualities.push({
+        id: "watermarked",
+        label: "Original (With Watermark)",
+        resolution: "Original Stream",
+        format: "MP4",
+        type: "video",
+        url: wmPlayUrl,
+        size: wmSize,
+        sizeFormatted: formatBytes(wmSize) || "Original",
+        badge: "Original",
+        badgeColor: "zinc",
+        description: "Original video retaining TikTok logo and username",
+        recommended: false,
+      });
+    }
+
     return NextResponse.json({
       success: true,
       data: {
@@ -210,6 +313,7 @@ export async function POST(req: NextRequest) {
               }
             : null,
         },
+        qualities,
         isSlideshow,
         images,
       },

@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
-  --foreground: #f4f4f5;
+  --background: #090a0f;
+  --foreground: #f4f4f7;
   --tik-cyan: #25f4ee;
   --tik-pink: #fe2c55;
-  --tik-dark: #121217;
-  --tik-card: rgba(18, 18, 23, 0.75);
+  --tik-rose: #ff3b5c;
+  --tik-purple: #8b5cf6;
+  --tik-dark: #111218;
+  --tik-card: #14151f;
   --tik-border: rgba(255, 255, 255, 0.08);
 }
 
@@ -31,106 +33,117 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(37, 244, 238, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(254, 44, 85, 0.05) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(139, 92, 246, 0.03) 0px, transparent 50%);
+  background-attachment: fixed;
 }
 
-/* Glassmorphism card */
-.glass-panel {
-  background: rgba(18, 18, 24, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-}
-
-.glass-pill {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Glowing text and buttons */
+/* Gradients */
 .text-gradient {
-  background: linear-gradient(135deg, #25f4ee 0%, #ffffff 40%, #fe2c55 100%);
+  background: linear-gradient(135deg, #25f4ee 0%, #ffffff 45%, #fe2c55 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-love {
+  background: linear-gradient(135deg, #ff6b8b 0%, #fe2c55 50%, #ff385c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #25f4ee 0%, #00b4d8 100%);
+  background: linear-gradient(135deg, #25f4ee 0%, #00c4cc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-pink {
-  background: linear-gradient(135deg, #ff5e7e 0%, #fe2c55 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.btn-primary-gradient {
-  background: linear-gradient(135deg, #25f4ee 0%, #00c4cc 50%, #fe2c55 100%);
-  background-size: 200% 200%;
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #25f4ee 0%, #00d2d3 30%, #fe2c55 100%);
   transition: all 0.3s ease;
 }
 
-.btn-primary-gradient:hover {
-  background-position: right center;
-  box-shadow: 0 0 25px rgba(254, 44, 85, 0.4), 0 0 15px rgba(37, 244, 238, 0.3);
+.bg-gradient-primary:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 8px 30px rgba(254, 44, 85, 0.3);
+}
+
+.bg-gradient-love-btn {
+  background: linear-gradient(135deg, #fe2c55 0%, #ff3b5c 50%, #ff6b8b 100%);
+  transition: all 0.3s ease;
+}
+
+.bg-gradient-love-btn:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 8px 25px rgba(254, 44, 85, 0.35);
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(18, 19, 27, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: #090a0f;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 4px;
+  background: #232532;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: #393b4e;
 }
 
-/* Shimmer animation */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
-  100% {
-    background-position: 200% 0;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.03) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0.03) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite ease-in-out;
+.animate-fadeIn {
+  animation: fadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Pulse glow animation */
-@keyframes pulseGlow {
+/* Pulse soft */
+@keyframes pulseSoft {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 1;
     transform: scale(1);
   }
   50% {
-    opacity: 0.7;
-    transform: scale(1.05);
+    opacity: 0.85;
+    transform: scale(1.02);
   }
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 6s infinite ease-in-out;
+.animate-pulse-soft {
+  animation: pulseSoft 3s infinite ease-in-out;
 }
