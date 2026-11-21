@@ -20,6 +20,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tiktok-video-download1.vercel.app"),
   title: "TikSaver HD — Download TikTok Videos Without Watermark in 1080p",
   description:
     "Free, lightning-fast TikTok video downloader without watermark. Save videos in 1080p Full HD MP4 and extract original MP3 audio instantly on any device.",
